@@ -1,0 +1,40 @@
+CREATE TABLE produto (
+	idproduto serial PRIMARY KEY,
+	validade date NOT NULL,
+	nome character varying(300) NOT NULL,
+	quantidade integer NOT NULL
+);
+
+CREATE TABLE endereco (
+	idendereco serial PRIMARY KEY,
+	logradouro character varying(300) NOT NULL,
+	numero integer NOT NULL
+);
+
+CREATE TABLE cliente (
+	idcliente serial PRIMARY KEY,
+	nome character varying(300) NOT NULL,
+	cpf integer NOT NULL UNIQUE,
+	rg integer NOT NULL,
+	idendereco int,
+	FOREIGN KEY (idendereco) REFERENCES endereco(idendereco)
+);
+
+
+CREATE TABLE telefone (
+	idtelefone serial primary key, 
+	idcliente int,
+	ddd integer NOT NULL,
+	numero integer NOT NULL,
+	FOREIGN KEY (idcliente) REFERENCES cliente(idcliente) 
+);
+
+
+CREATE TABLE pedido (
+	idpedido serial PRIMARY KEY,
+	quantidade int,
+	idcliente int,
+	idproduto int,
+    FOREIGN KEY (idcliente) REFERENCES cliente (idcliente),
+	FOREIGN KEY (idproduto) REFERENCES produto (idproduto)
+);
